@@ -1,6 +1,5 @@
 const express = require('express');
 const axios = require('axios');
-// const cheerio = require('cheerio');
 
 const app = express();
 
@@ -133,6 +132,17 @@ app.get('/', (req, res) => res.send('Welcome to Ghibli Movies API'));
 
 app.get('/movies', (req, res) => {
     res.json(movies);
-})
+});
+
+app.get('/movies/:id', (req, res) => {
+    const id = req.params.id;
+    const movieId = movies[id];
+
+    if (movieId) {
+        res.json(movieId);
+    } else {
+        res.json({ message: 'Movie not found' });
+    }
+});
 
 app.listen(PORT, () => console.log(`Server running on PORT: ${PORT}`));
