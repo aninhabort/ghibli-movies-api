@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: Ghibli Movies API
+  description: Uma API para obter informações de filmes do Studio Ghibli
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor local de desenvolvimento
+
+paths:
+  /:
+    get:
+      summary: Retorna uma lista de filmes
+      tags:
+        - Filmes
+      responses:
+        200:
+          description: Lista de filmes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+
+  /{id}:
+    get:
+      summary: Retorna um filme específico pelo ID
+      tags:
+        - Filmes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do filme a ser obtido
+      responses:
+        200:
+          description: Detalhes de um filme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        404:
+          description: Filme não encontrado
+
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        img:
+          type: string
+          example: 'https://i0.wp.com/studioghibli.com.br/wp-content/uploads/2020/06/1984-Nausica%C3%A4-do-Vale-do-Vento.jpg?w=279&ssl=1'
+        name:
+          type: string
+          example: 'Nausicaä do Vale do Vento'
+        year:
+          type: integer
+          example: 1984
